@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="plant-detail">
+        <h1 class="title">{{ plant.title }}</h1>
+        <p class="created">Опубликовано: {{ plant.created_at }}</p>
+
+        <img src="{{ plant.image.url }}" alt="{{ plant.title }}" class="plant-image">
+        <p class="description">{{ plant.description }}</p>
+         <p>Автор:<a href="{%url 'profile_author' slug=plant.author.user.profile.slug%}">{{ plant.author.user.username }}</a></p>
+        <p class="category"><strong>Категория:</strong> <a href="{{ plant.category.get_absolute_url }}">{{ plant.category.title }}</a></p>
+
+        {% if plant.tag.all %}
+        <p class="tags">
+            <strong>Теги:</strong>
+            {% for tag in plant.tag.all %}
+                <span class="tag"><a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a></span>
+            {% endfor %}
+        </p>
+        {% endif %}
+    </div>
+
+    <!-- Голосование -->
+<div class="vote-buttons">
+    <button class="vote-btn like-btn" data-plant-id="{{ plant.id }}" data-vote="like">
+        {% if user_vote == 1 %}
+            ❤️
+        {% else %}
+            🤍
+        {% endif %}
+        <span class="like-count">{{ plant.likes }}</span>
+    </button>
+
+    <button class="vote-btn dislike-btn" data-plant-id="{{ plant.id }}" data-vote="dislike">
+        {% if user_vote == -1 %}
+            💔
+        {% else %}
+            🤍
+        {% endif %}
+        <span class="dislike-count">{{ plant.dislikes }}</span>
+    </button>
+</div>
+
+
+</div>
+
+
+
+<!-- Скрытый csrf-токен -->
+<form style="display: none;">{% csrf_token %}</form>
+
+<!-- JS для обработки голосов -->
+
+<hr class="divider">
+
+<div class="comments-section">
+    <h2 class="comments-title">Комментарии ({{ comments.paginator.count }})</h2>
+
+    <!-- Список комментариев -->
+    <div class="comment-list">
+        {% for comment in comments %}
+            <div class="comment">
+                <div class="comment-header">
+                    <a href="{%url 'profile_author' slug=comment.author.profile.slug%}"><strong>{{ comment.author.username }}</strong></a>
+                    <span class="comment-date">{{ comment.created_at|date:"d.m.Y" }}</span>
+                </div>
+                <p class="comment-text">{{ comment.comment}}</p>
+            </div>
+        {% empty %}
+            <p>Пока нет комментариев.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Пагинация -->
+    <div class="pagination">
+        {% if comments.has_previous %}
+            <a href="?page={{ comments.previous_page_number }}">← Назад</a>
+        {% endif %}
+
+        <span>Страница {{ comments.number }} из {{ comments.paginator.num_pages }}</span>
+
+        {% if comments.has_next %}
+            <a href="?page={{ comments.next_page_number }}">Вперёд →</a>
+        {% endif %}
+    </div>
+
+    <!-- Форма добавления комментария -->
+<form method="post" action="{% url 'add_comment' slug=plant.slug %}">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Оставить комментарий</button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    document.querySelectorAll('.vote-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const plantId = this.dataset.plantId;
+            const voteType = this.dataset.vote;
+            const likeBtn = document.querySelector('.like-btn');
+            const dislikeBtn = document.querySelector('.dislike-btn');
+
+            fetch("{% url 'vote' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken
+                },
+                body: new URLSearchParams({
+                    'object_id': plantId,
+                    'vote': voteType
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Обновляем счётчики
+                document.querySelector('.like-count').textContent = data.likes;
+                document.querySelector('.dislike-count').textContent = data.dislikes;
+
+                // Обновляем иконки
+                if (data.user_vote === 'like') {
+                    likeBtn.innerHTML = '❤️ <span class="like-count">' + data.likes + '</span>';
+                    dislikeBtn.innerHTML = '🤍 <span class="dislike-count">' + data.dislikes + '</span>';
+                } else if (data.user_vote === 'dislike') {
+                    likeBtn.innerHTML = '🤍 <span class="like-count">' + data.likes + '</span>';
+                    dislikeBtn.innerHTML = '💔 <span class="dislike-count">' + data.dislikes + '</span>';
+                } else {
+                    likeBtn.innerHTML = '🤍 <span class="like-count">' + data.likes + '</span>';
+                    dislikeBtn.innerHTML = '🤍 <span class="dislike-count">' + data.dislikes + '</span>';
+                }
+            });
+        });
+    });
+});
+</script>
+
+
+{% endblock content %}

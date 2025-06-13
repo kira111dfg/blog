@@ -1,0 +1,128 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #fdf6b2, #f7ca18);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.form-container {
+    background: #fffde7;
+    padding: 2.5rem 3rem;
+    border-radius: 15px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    margin-bottom: 1.5rem;
+    color: #fbc02d;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+label {
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: #8d6e00;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.2rem;
+    border: 2px solid #fbc02d;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: #fffde7;
+}
+
+input:focus {
+    border-color: #f9a825;
+    outline: none;
+}
+
+button {
+    padding: 0.85rem;
+    background: #fbc02d;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #f9a825;
+}
+
+p {
+    margin-top: 1rem;
+    text-align: center;
+    color: #8d6e00;
+}
+
+p a {
+    color: #f9a825;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+
+.error-message {
+    color: #d9534f;
+    font-size: 0.9em;
+    margin-top: 4px;
+}
+
+.messages {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.messages li {
+    color: #d9534f;
+    background: #f2dede;
+    border: 1px solid #ebccd1;
+    padding: 8px 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.messages li.error-message {
+    color: #d9534f !important;
+    background: #f2dede !important;
+    border: 1px solid #ebccd1 !important;
+    padding: 8px 10px !important;
+    border-radius: 4px !important;
+    margin-bottom: 5px !important;
+    font-size: 0.9em !important;
+}
+
+.messages li.error {
+    color: #d9534f;
+    background: #f2dede;
+    border: 1px solid #ebccd1;
+    padding: 8px 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}

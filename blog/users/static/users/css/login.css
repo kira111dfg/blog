@@ -1,0 +1,136 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #e8f5e9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 100, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-container h2 {
+  color: #2e7d32;
+  margin-bottom: 25px;
+}
+
+.login-container h2 i {
+  margin-right: 8px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #388e3c;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #a5d6a7;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #f1f8f4;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #2e7d32;
+  outline: none;
+}
+
+.login-button {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.login-button:hover {
+  background-color: #1b5e20;
+}
+
+.register-link {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+
+
+.form-errors {
+  background-color: #fbe9e7;
+  border: 1px solid #ffab91;
+  color: #d84315;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+
+a {
+  text-decoration: none;
+  color: #2e7d32; /* основной зелёный цвет */
+  position: relative;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+/* Добавляем псевдоэлемент-подчёркивание */
+a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background-color: #2e7d32;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+
+a:hover::after {
+  transform: scaleX(1);
+}
+
+      .error-message {
+          color: #d9534f;
+          font-size: 0.9em;
+          margin-top: 4px;
+      }
+      .messages {
+          list-style: none;
+          padding: 0;
+          margin: 10px 0;
+      }
+      .messages li {
+          color: #d9534f;
+          background: #f2dede;
+          border: 1px solid #ebccd1;
+          padding: 8px 10px;
+          border-radius: 4px;
+          margin-bottom: 5px;
+      }

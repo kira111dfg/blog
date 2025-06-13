@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 style="text-align: center; color: #2e7d32;">Наши растения</h2>
+
+<div class="plant-container">
+    {% for plant in plants %}
+  <div class="plant-card">
+        <img src="{{ plant.image.url }}" alt="{{ plant.title }}">
+        <div class="plant-info">
+            <h3><a href="{{plant.get_absolute_url}}">{{ plant.title }}</a></h3>
+            <p class="created">{{ plant.created_at }}</p>
+            <p class="excerpt" style="color: #388e3c;">
+            {{ plant.description|truncatechars:100 }}
+            <a href="{{plant.get_absolute_url}}" class="read-more-inline">Читать далее</a>
+            </p>
+            <p class="category">Категория: {{ plant.category.title }}</p>
+        </div>
+    </div>
+    {% empty %}
+    <p>Нет доступных постов.</p>
+    {% endfor %}
+</div>
+{% endblock %}

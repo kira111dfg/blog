@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <link rel="stylesheet" href="{% static 'users/css/profile.css' %}" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <div class="profile-container">
+    <h2><i class="fas fa-user-circle"></i> Ваш профиль</h2>
+
+    <form method="POST" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+
+      <div class="forms-wrapper">
+        <div class="form-section user-info">
+          <h3>Данные пользователя</h3>
+          <div class="form-group">
+            {{ u_form.username.label_tag }}
+            {{ u_form.username }}
+          </div>
+          <div class="form-group">
+            {{ u_form.email.label_tag }}
+            {{ u_form.email }}
+          </div>
+ 
+              <div class="form-group">
+            {{ p_form.about.label_tag }}
+            {{ p_form.about }}
+          </div>
+          
+        </div>
+
+        <div class="form-section profile-info">
+          <h3>Профиль</h3>
+
+          <div class="avatar-preview">
+            {% if request.user.profile.avatar.url %}
+              <img src="{{ request.user.profile.avatar.url }}" alt="Аватар" />
+            {% else %}
+              <img src="{% static 'users/img/sbcf-default-avatar.png' %}" alt="Аватар по умолчанию" />
+            {% endif %}
+          </div>
+
+
+
+          <div class="form-group">
+            {{ p_form.avatar.label_tag }}
+            {{ p_form.avatar }}
+          </div>
+                   <div class="form-group">
+            {{ u_form.first_name.label_tag }}
+            {{ u_form.first_name }}
+          </div>
+          <div class="form-group">
+            {{ u_form.last_name.label_tag }}
+            {{ u_form.last_name }}
+          </div>
+      
+          {% if request.user.profile.avatar.url != '/media/img/sbcf-default-avatar.png' %}
+          <div class="form-group checkbox-group">
+            {{ p_form.delete_avatar }}
+            {{ p_form.delete_avatar.label_tag }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <button type="submit" class="profile-submit-button">Сохранить изменения</button>
+    </form>
+  </div>
+{% endblock content %}

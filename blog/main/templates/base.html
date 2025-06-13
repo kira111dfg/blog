@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link type="text/css" href="{% static 'css/main.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" >
+
+   
+    <title>Blog</title>
+  </head>
+    <body>
+        
+  <header class="main-header">
+    <div class="header-top">
+     <div class="header-left"> <a style="color:  #c8e6c9;;" href="{%url 'home'%}">Все о растениях</div></a>
+
+      <form action="{% url 'plant_search' %}" method="get" class="header-search">
+        <input type="text" name="q" placeholder="Поиск по сайту...">
+      </form>
+
+      <div class="header-right">
+        {% if user.is_authenticated %}
+          <a href="{% url 'profile_author' slug=request.user.profile.slug%}">
+            <i class="fas fa-user-circle"></i> Профиль
+          </a>
+          <form action="{% url 'logout' %}" method="post" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="link-button">
+              <i class="fas fa-sign-out-alt"></i> Выйти
+            </button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}">
+            <i class="fas fa-sign-in-alt"></i> Вход
+          </a>
+          <a href="{% url 'register' %}">
+            <i class="fas fa-user-plus"></i> Регистрация
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="header-image">
+      <img src="{% static 'img/banner.jpg' %}" alt="Растения">
+    </div>
+  </header>
+
+        {% block content %}
+        {% endblock content %}
+    </body>

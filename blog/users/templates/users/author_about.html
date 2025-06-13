@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'users/css/profile_author.css' %}">
+
+<div class="container">
+  <div class="profile-card">
+    <img src="{{ author.avatar.url }}" alt="Аватар автора" class="avatar">
+    <h2>{{ author.user.get_full_name|default:author.user.username }}</h2>
+
+    <div class="buttons">
+      <a href="{% url 'profile_author' author.slug %}" class="btn">Посты автора</a>
+    </div>
+    </div>
+
+<div class="about-box">
+  <h3>О авторе</h3>
+  {% if author.about %}
+    <p>{{ author.about }}</p>
+  {% else %}
+    <p>Автор пока не добавил информацию о себе.</p>
+  {% endif %}
+</div>
+</div>
+
+{% endblock %}
