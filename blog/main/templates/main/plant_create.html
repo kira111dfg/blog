@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+  <h2 class="form-title">Добавить новое растение</h2>
+  <form method="post" enctype="multipart/form-data" class="plant-form">
+    {% csrf_token %}
+    
+    <label for="id_name">Название растения</label>
+    {{ form.title}}
+
+    <label for="id_description">Описание</label>
+    {{ form.description }}
+
+    <label for="id_img">Фото растения</label>
+    {{ form.image }}
+
+    <label for="id_category">Категория</label>
+    {{ form.category }}
+
+    <label for="id_tags">Теги (через запятую)</label>
+    {{ form.tag }}
+
+    <button type="submit" class="btn-submit">Добавить растение</button>
+  </form>
+</div>
+{% endblock content %}

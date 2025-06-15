@@ -71,7 +71,7 @@ DATABASES = {
         'NAME': 'blog',
         'USER': 'blog',
         'PASSWORD': 'kirakira900',
-        'HOST': 'localhost',  # или IP сервера
+        'HOST': 'localhost',  
         'PORT': '5432',
     }
 }

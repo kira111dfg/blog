@@ -13,4 +13,5 @@ urlpatterns = [
     path("comment/delete/<int:pk>/",views.DeleteCommentView.as_view(),  name="delete_comment"), 
     path('vote/', views.vote_view, name='vote'),
     path('search/', views.PlantSearchView.as_view(), name='plant_search'),
+    path('plant_create/',views.PlantCreate.as_view(),name='plant_create')
 ]

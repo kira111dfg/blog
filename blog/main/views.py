@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import DetailView,ListView,CreateView,UpdateView,DeleteView
-from .forms import CommentForm
+from .forms import CommentForm, PlantForm
 from .models import Category, Plant, LikeDislike,Comment
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404, redirect
@@ -10,6 +10,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -18,7 +19,7 @@ class PlantListHome(ListView):
     model=Plant
     context_object_name='plants'
     template_name='main/plant_list.html'
-    queryset=Plant.objects.order_by('created_at')[:3]
+    paginate_by=8
 
 
 class PlantDetail(DetailView):
@@ -64,6 +65,7 @@ class CategoryView(ListView):
     template_name = 'main/category.html'
     context_object_name = 'plants'
     category=None
+    paginate_by=8
 
     def get_queryset(self):
         self.category = Category.objects.get(slug=self.kwargs['category_slug'])
@@ -77,6 +79,7 @@ class TagView(ListView):
     template_name = 'main/tag.html'
     context_object_name = 'plants'
     tag=None
+    paginate_by=8
 
     def get_queryset(self):
        return Plant.objects.filter(tag__slug=self.kwargs['tag_slug'])
@@ -148,11 +151,10 @@ def vote_view(request):
     else:
         return JsonResponse({'error': 'Invalid vote'}, status=400)
 
-    # Получаем объект Plant
     plant = get_object_or_404(Plant, id=object_id)
     content_type = ContentType.objects.get_for_model(plant)
 
-    # Пытаемся получить существующий голос пользователя
+
     obj_vote, created = LikeDislike.objects.get_or_create(
         user=user,
         content_type=content_type,
@@ -161,19 +163,18 @@ def vote_view(request):
     )
 
     if not created:
-        # Если голос уже есть и совпадает — отменяем голос
+
         if obj_vote.vote == vote_int:
             obj_vote.delete()
             user_vote = None
         else:
-            # Иначе меняем голос
+
             obj_vote.vote = vote_int
             obj_vote.save()
             user_vote = vote_int
     else:
         user_vote = vote_int
 
-    # Считаем лайки и дизлайки
     likes = LikeDislike.objects.filter(
         content_type=content_type,
         object_id=plant.id,
@@ -186,7 +187,6 @@ def vote_view(request):
         vote=-1
     ).count()
 
-    # Формируем user_vote для JS ('like', 'dislike' или None)
     if user_vote == 1:
         user_vote_str = 'like'
     elif user_vote == -1:
@@ -202,7 +202,14 @@ def vote_view(request):
 
 
 
+class PlantCreate(LoginRequiredMixin,CreateView):
+    form_class = PlantForm
+    template_name = 'main/plant_create.html'
 
+    def form_valid(self, form):
+        p = form.save(commit=False)
+        p.author = self.request.user.profile
+        return super().form_valid(form)
 
 
 

@@ -410,3 +410,121 @@ button.link-button:hover::after {
     height: 1px;
     background: #ddd;
 }
+
+
+
+.form-container {
+  max-width: 500px;
+  background-color: #e6f4ea; /* нежно-зеленый фон */
+  padding: 25px 30px;
+  margin: 40px auto;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(34, 139, 34, 0.2);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.form-title {
+  text-align: center;
+  color: #2e7d32; /* темно-зеленый */
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.plant-form label {
+  display: block;
+  margin-bottom: 6px;
+  color: #2e7d32;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.plant-form input[type="text"],
+.plant-form textarea,
+.plant-form select,
+.plant-form input[type="file"] {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 20px;
+  border: 2px solid #a5d6a7;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #2e7d32;
+  background-color: #f1f8f1;
+  transition: border-color 0.3s ease;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.plant-form input[type="text"]:focus,
+.plant-form textarea:focus,
+.plant-form select:focus,
+.plant-form input[type="file"]:focus {
+  border-color: #4caf50;
+  outline: none;
+  background-color: #e8f5e9;
+}
+
+.plant-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.btn-submit {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  background-color: #4caf50;
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.btn-submit:hover {
+  background-color: #388e3c;
+}
+
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 30px 0;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  color: #555;
+}
+
+.pagination a {
+  padding: 8px 16px;
+  background-color: #c8e6c9; /* нежно-зеленый фон */
+  color: #2e7d32; /* темно-зеленый текст */
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(46, 125, 50, 0.3);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination a:hover {
+  background-color: #a5d6a7;
+  color: #1b5e20;
+}
+
+.pagination span {
+  color:#2e7d32; /* розовый акцент */
+  font-weight: 600;
+}
+
+.pagination a:disabled,
+.pagination a[aria-disabled="true"] {
+  pointer-events: none;
+  background-color: #eee;
+  color: #aaa;
+  box-shadow: none;
+}

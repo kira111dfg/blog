@@ -12,6 +12,7 @@
     <div class="buttons">
       {% if user == author.user %}
         <a href="{% url 'profile' %}" class="btn">Редактировать профиль</a>
+        <a href="{% url 'plant_create' %}" class="btn">Добавить пост</a>
       {% else %}
         <a href="{% url 'profile_about' author.slug %}" class="btn">О авторе</a>
         <a href="{% url 'profile_author' author.slug %}" class="btn">Посты автора</a>
