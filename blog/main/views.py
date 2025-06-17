@@ -98,8 +98,9 @@ class BaseCommentView:
             "plant",  
             kwargs={"slug": post.slug},  
         )
-    
-class AddCommentView(BaseCommentView,CreateView):
+
+
+class AddCommentView(LoginRequiredMixin,BaseCommentView,CreateView):
     form_class=CommentForm
     template_name = 'main/add_comment.html'
 
